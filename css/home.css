@@ -1,0 +1,464 @@
+﻿@backgroundimgS:contain;
+@backgroundimgWrapper:cover;
+
+body {
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    overflow: hidden;
+}
+
+    body * {
+        font-family: 'Microsoft YaHei';
+    }
+
+ul {
+    margin: auto;
+}
+
+    ul li {
+        list-style: none;
+    }
+
+.wrapper {
+    position: relative;
+    margin: 0 auto;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.wrapperItem {
+    overflow: hidden;
+    position: relative;
+    margin: 0 auto;
+    width: 100%;
+    height: 100%;
+}
+
+.contentWrapper {
+    background: url(../images/home/1.png) 0 0 no-repeat;
+    background-size: @backgroundimgWrapper;
+    -webkit-background-size: @backgroundimgWrapper;
+    -moz-background-size: @backgroundimgWrapper;
+    -o-background-size: @backgroundimgWrapper;
+    -webkit-transition: width 1s ease;
+    -moz-transition: width 1s ease;
+    -o-transition: width 1s ease;
+    transition: width 1s ease;
+}
+
+
+
+.header {
+    padding-top: 10%;
+    height: auto;
+    -webkit-transition: width 1s ease;
+    -moz-transition: width 1s ease;
+    -o-transition: width 1s ease;
+    transition: width 1s ease;
+}
+
+.gameTitle {
+    /*height: 100%;
+    width: 100%;*/
+    margin: 0 auto;
+    background: url(../images/home/2.png) 0 0 no-repeat;
+    background-size: @backgroundimgS;
+    -webkit-background-size: @backgroundimgS;
+    -moz-background-size: @backgroundimgS;
+    -o-background-size: @backgroundimgS;
+}
+
+.btnsContents {
+    width: 100%;
+}
+
+.btns {
+    opacity: 0;
+    margin-top: 22%;
+    animation: aBtns .5s;
+    /*animation:aBtns 5.5s;*/
+    transition-delay: 5s;
+    animation-fill-mode: forwards;
+}
+
+@keyframes aBtns {
+    100% {
+        opacity: 1;
+    }
+}
+
+.startGame {
+    width: 55%;
+    height: 80px;
+    margin: 0 auto;
+    background: url(../images/home/5.png) 0 0 no-repeat;
+    background-size: @backgroundimgS;
+    -webkit-background-size: @backgroundimgS;
+    -moz-background-size: @backgroundimgS;
+    -o-background-size: @backgroundimgS;
+}
+
+.showRecord {
+    width: 55%;
+    height: 80px;
+    margin: 0px auto;
+    margin-top: 15px;
+    background: url(../images/home/6.png) 0 0 no-repeat;
+    background-size: @backgroundimgS;
+    -webkit-background-size: @backgroundimgS;
+    -moz-background-size: @backgroundimgS;
+    -o-background-size: @backgroundimgS;
+}
+
+.footer {
+    position: absolute;
+    bottom: 0;
+    height: 25%;
+    width: 100%;
+    margin: 0 auto;
+    -webkit-transition: width 1s ease;
+    -moz-transition: width 1s ease;
+    -o-transition: width 1s ease;
+    transition: width 1s ease;
+    background: url(../images/home/3.png) 0 0 no-repeat;
+    background-size: @backgroundimgWrapper;
+    -webkit-background-size: @backgroundimgWrapper;
+    -moz-background-size: @backgroundimgWrapper;
+    -o-background-size: @backgroundimgWrapper;
+    z-index: 99;
+}
+
+.gameNotice {
+    position: absolute;
+    top: 28%;
+    width: 80%;
+    height: 46%;
+    margin: 0 auto;
+    text-align: center;
+    -webkit-transition: width 1s ease;
+    -moz-transition: width 1s ease;
+    -o-transition: width 1s ease;
+    transition: width 1s ease;
+    background: url(../images/home/8.png) 0 0 no-repeat;
+    background-size: @backgroundimgS;
+    -webkit-background-size: @backgroundimgS;
+    -moz-background-size: @backgroundimgS;
+    -o-background-size: @backgroundimgS;
+    -webkit-animation: aGameNotice .1s cubic-bezier(.15,.93,.9,.08);
+    z-index: 100;
+    display:none;
+}
+
+    .gameNotice p {
+        color: #b61c22;
+        font-size: 14px;
+        font-weight: bold;
+    }
+
+@keyframes aGameNotice {
+    0% {
+        display:block;
+    }
+    100% {
+        left: 100%;
+    }
+}
+
+
+.gameRecords {
+    position: relative;
+    background: url(../images/home/7.png) 0 0 no-repeat;
+    display: none;
+    width: 80%;
+    height: 46%;
+    margin: 12% auto;
+    background-size: @backgroundimgS;
+    -webkit-background-size: @backgroundimgS;
+    -moz-background-size: @backgroundimgS;
+    -o-background-size: @backgroundimgS;
+    z-index: 100;
+}
+
+.closeGameRecords {
+    position: absolute;
+    top: 7px;
+    right: -4px;
+    background-size: @backgroundimgS;
+    -webkit-background-size: @backgroundimgS;
+    -moz-background-size: @backgroundimgS;
+    -o-background-size: @backgroundimgS;
+    background: url('../images/home/9.png') 0 0 no-repeat;
+    width: 30px;
+    height: 30px;
+    background-size: 30px 30px;
+}
+
+.gameRecords table {
+    width: 91%;
+    margin: 6% auto;
+    border-collapse: collapse;
+}
+
+    .gameRecords table tr td {
+        text-align: center;
+        color: #9C2925;
+        width: 27%;
+        border-collapse: collapse;
+    }
+
+
+/****************游戏界面*****************/
+
+.gameContentWrapper {
+    background: url(../images/gamecontent/1.png) 0 0 no-repeat;
+    background-size: @backgroundimgWrapper;
+    -webkit-background-size: @backgroundimgWrapper;
+    -moz-background-size: @backgroundimgWrapper;
+    -o-background-size: @backgroundimgWrapper;
+    -webkit-transition: width 1s ease;
+    -moz-transition: width 1s ease;
+    -o-transition: width 1s ease;
+    transition: width 1s ease;
+    left: -100%;
+}
+
+.gameContentWrapperShow {
+    -webkit-animation: aGameContentWrapper 1s;
+    animation-fill-mode: forwards;
+}
+
+.gameContentWrapperHide {
+    -webkit-animation: aGameContentWrapperH 1s;
+}
+
+@keyframes aGameContentWrapper {
+    100% {
+        left: 0;
+    }
+}
+
+@keyframes aGameContentWrapperH {
+    100% {
+        left: -100%;
+    }
+}
+
+.gameContentHeader {
+    margin: 3px auto;
+    background: url(../images/gamecontent/6.png) 0 0 no-repeat;
+    background-size: @backgroundimgS;
+    -webkit-background-size: @backgroundimgS;
+    -moz-background-size: @backgroundimgS;
+    -o-background-size: @backgroundimgS;
+    padding-top: 2.1%;
+}
+
+.questionNum {
+    width: 32%;
+    height: 80%;
+    margin: 0 auto;
+    background: url(../images/gamecontent/n1.png) 0 0 no-repeat;
+    background-size: @backgroundimgS;
+    -webkit-background-size: @backgroundimgS;
+    -moz-background-size: @backgroundimgS;
+    -o-background-size: @backgroundimgS;
+}
+
+/**人物**/
+.gameContentPeople {
+    height: 37%;
+    width: 55%;
+    margin: 5% auto;
+    /*margin-bottom:0;*/
+    background: url(../images/gamecontent/p1.png) 0 0 no-repeat;
+    background-size: @backgroundimgS;
+    -webkit-background-size: @backgroundimgS;
+    -moz-background-size: @backgroundimgS;
+    -o-background-size: @backgroundimgS;
+}
+
+.gameContentTime {
+    height: 7%;
+    width: 50%;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.gameContentTime span {
+    float: left;
+    display: inline-block;
+    height: 68%;
+    width: 25%;
+    background: url(../images/gamecontent/5.png) 0 0 no-repeat;
+    background-size: @backgroundimgS;
+    -webkit-background-size: @backgroundimgS;
+    -moz-background-size: @backgroundimgS;
+    -o-background-size: @backgroundimgS;
+}
+
+.gameContentTime label {
+    float: left;
+    display: inline-block;
+    color: white;
+    line-height: 31px;
+    font-size: 32px;
+}
+
+.gameContentQuestion {
+    min-height:10%;
+    width:90%;
+    padding:0 5%;
+    background-color:#817C87;
+    text-align:center;
+}
+.gameContentQuestion p {
+    font-size:20px;
+    color:white;
+    font-family:Arial;    
+    line-height:40px;
+    padding-top:10px;
+}
+
+.gameContentBtns {
+    height:10%;
+    width:90%;
+    padding:5%;
+}
+
+.gameContentBtns div {
+    margin-left:4%;
+    width:45%;
+    height:100%;
+    display:inline-block;
+}
+.gameContentBtns .btnYes {
+    background: url(../images/gamecontent/2.png) 0 0 no-repeat;
+    background-size: @backgroundimgS;
+    -webkit-background-size: @backgroundimgS;
+    -moz-background-size: @backgroundimgS;
+    -o-background-size: @backgroundimgS;
+}
+.gameContentBtns .btnNo {
+    background: url(../images/gamecontent/3.png) 0 0 no-repeat;
+    background-size: @backgroundimgS;
+    -webkit-background-size: @backgroundimgS;
+    -moz-background-size: @backgroundimgS;
+    -o-background-size: @backgroundimgS;
+}
+
+/*************响应式处理****************/
+
+@media screen and (min-width:750px) {
+    .contentWrapper, .gameContentWrapper {
+        width: 480px;
+        height: 100%;
+    }
+
+    .footer {
+        width: 480px;
+        height: 190px;
+    }
+
+    .gameTitle {
+        width: 300px;
+        height: 115px;
+    }
+
+    .gameNotice {
+        left: -80%;
+        padding-top: 17%;
+    }
+
+    .gameRecords {
+        padding-top: 17%;
+        margin-top: 3%;
+    }
+
+    .closeGameRecords {
+        width: 40px;
+        height: 40px;
+        background-size: 40px 40px;
+    }
+
+    .gameContentHeader {
+        width: 200px;
+        height: 45px;
+    }
+
+    .gameContentTime {
+        height:45px;
+        width: 175px;
+    }
+}
+
+@media screen and (max-width:420px) {
+    .gameTitle {
+        width: 300px;
+        height: 115px;
+    }
+
+    .startGame {
+        width: 210px;
+        height: 60px;
+    }
+
+    .showRecord {
+        width: 190px;
+        height: 60px;
+    }
+
+    .gameNotice {
+        height: 220px;
+        width: 320px;
+        left: -344px;
+        padding-top: 11%;
+    }
+
+    .gameRecords {
+        height: 220px;
+        width: 320px;
+        padding-top: 17%;
+    }
+
+        .gameRecords table {
+            width: 87%;
+        }
+
+    .gameContentHeader {
+        width: 150px;
+        height: 30px;
+    }
+
+    .gameContentPeople {
+        height: 37%;
+        width: 62%;
+    }
+}
+
+@media screen and (max-width:320px) {
+    .gameTitle {
+        width: 250px;
+        height: 96px;
+    }
+
+    .gameRecords {
+        height: 220px;
+        width: 308px;
+        padding-top: 19%;
+    }
+
+    .gameContentTime label {
+        font-size: 25px;
+        line-height:24px;
+    }
+    .gameContentQuestion p {
+        font-size: 19px;
+        line-height:30px;
+    }
+}
