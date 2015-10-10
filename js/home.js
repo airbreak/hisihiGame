@@ -7,14 +7,14 @@ var game = {
     $cWrapper: null,
     $gWrapper: null,
     timeInterval: null,
-    questionsArr: [{ qId: 1, qDescription: '在ps中，ctrl+v是复制的快捷键对么？', a: true }, { qId: 2, qDescription: '在ps中，ctrl+v是复制的快捷键对么？', a: true },
-        { qId: 3, qDescription: '在ps中，ctrl+j是复制l图层的快捷键对么？', a: true }, { qId: 4, qDescription: '在ps中，ctrl+b是取消选区的快捷键对么？', a: false },
-        { qId: 5, qDescription: '在ps中，p是快速蒙板的快捷键对么？', a: true }, { qId: 6, qDescription: '在ps中，ctrl+i是反向选择的快捷键对么？', a: true },
-        { qId: 7, qDescription: '在ps中，ctrl+t是标尺的快捷键对么？', a: true }, { qId: 8, qDescription: '在ps中，b是的画笔的快捷键对么？', a: true },
-        { qId: 9, qDescription: '在ps中，ctrl+r是自由绽放的快捷键对么？', a: false }, { qId: 10, qDescription: '在ps中，g是复制的快捷键对么？', a: false }
+    questionsArr: [{ qId: 1, qDescription: '在ps中，ctrl+v是复制的快捷键对么？', answer: true }, { qId: 2, qDescription: '在ps中，ctrl+v是复制的快捷键对么？', answer: true },
+        { qId: 3, qDescription: '在ps中，ctrl+j是复制l图层的快捷键对么？', answer: true }, { qId: 4, qDescription: '在ps中，ctrl+b是取消选区的快捷键对么？', answer: false },
+        { qId: 5, qDescription: '在ps中，p是快速蒙板的快捷键对么？', answer: true }, { qId: 6, qDescription: '在ps中，ctrl+i是反向选择的快捷键对么？', answer: true },
+        { qId: 7, qDescription: '在ps中，ctrl+t是标尺的快捷键对么？', answer: true }, { qId: 8, qDescription: '在ps中，b是的画笔的快捷键对么？', answer: true },
+        { qId: 9, qDescription: '在ps中，ctrl+r是自由绽放的快捷键对么？', answer: false }, { qId: 10, qDescription: '在ps中，g是复制的快捷键对么？', answer: false }
     ],
-    answersArr:[],
-
+    answersArr: [],  //答题情况
+    totalScores: 0,  //总分
     /**初始化游戏**/
     initialize: function () {
         this.$cWrapper = $('.contentWrapper');
@@ -37,7 +37,7 @@ var game = {
                 $('.gameRecords').show();
             }
             that.showGameContentWrapper();
-            
+
         });
 
         /*关闭记录*/
@@ -48,14 +48,14 @@ var game = {
 
         /*题目答案选择*/
         that.$gWrapper.on('click', '.gameContentBtns>div', function () {
-            var $q=that.$gWrapper.find('.gameContentQuestion'),
-                  qid=$q.attr('data-qid'),  //当前题号
+            var $q = that.$gWrapper.find('.gameContentQuestion'),
+                  qid = $q.attr('data-qid'),  //当前题号
                   currentAnswer = !$(this).index();//当前题号的答案
 
             //保存所回答问题
             that.answersArr.push({
                 qid: qid,
-                answer:currentAnswer
+                answer: currentAnswer
             });
             that.fillInQuestionToDom();   //随机出题
         });
@@ -120,7 +120,7 @@ var game = {
     updateTimeShowInfo: function ($label) {
         var num = $label.text().split(':')[2] | 0;
         if (num == 0) {
-            num=('00:00:00');
+            num = ('00:00:00');
             this.gameOver();
         } else {
             num--;
@@ -132,18 +132,61 @@ var game = {
         }
     },
 
-    /*游戏结束*/
+    /*
+    *游戏结束
+    *得到具体的 答对情况数组,true表示正确，false表示错误：[true,false,false,false,false,false,true]
+    */
     gameOver: function () {
         console.log('时间到！');
         window.clearInterval(this.timeInterval);
-        $.each(this.answersArr,function () {
-           this
+        var that = this,
+            doubleHitArr = [];
+
+        //得到具体的 答对情况数组
+        $.each(this.answersArr, function () {
+            var qid = this.qid,
+                answer = this.answer;
+            $.each(that.questionsArr, function () {
+                if (qid == this.qId.toString()) {
+                    var flag = false;
+                    if (answer == this.answer) {
+                        flag = true;
+                    }
+                    doubleHitArr.push(flag);
+                }
+            });
         });
+
+        var i = 0,
+            length = doubleHitArr.length;
+
+        for (var j = 0; j < length; j++) {
+            if (doubleHitArr[j]) {
+                i++;
+            } else {
+                if (i != 0) {
+                    that.calculateScroes(i);
+                }
+                i = 0;
+            }
+        }
+        that.calculateScroes(i);
+
+        $('.gameOverWrapper').show().siblings().hide();
+       console.log(that.totalScores);
     },
 
-    /*游戏得分计算*/
-    calculateScroes: function () {
-         
+    /*
+    *游戏得分计算
+    *根据连击情况计算分数
+    *计算规则 ：24 的 n次方
+    *   2连击*2  +576分
+    *   3连击*3  +13824分
+    *   4连击*4  +331776分
+    *
+    */
+    calculateScroes: function (i) {
+        this.totalScores += Math.pow(24, i);
     },
 
     OBJECT_NAME: 'game'

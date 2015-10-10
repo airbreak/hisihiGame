@@ -352,10 +352,38 @@ ul {
     -o-background-size: @backgroundimgS;
 }
 
+/*****************游戏结束*********************/
+.gameOverWrapper {
+    background: url(../images/home/1.png) 0 0 no-repeat;
+    background-size: @backgroundimgWrapper;
+    -webkit-background-size: @backgroundimgWrapper;
+    -moz-background-size: @backgroundimgWrapper;
+    -o-background-size: @backgroundimgWrapper;
+    -webkit-transition: width 1s ease;
+    -moz-transition: width 1s ease;
+    -o-transition: width 1s ease;
+    transition: width 1s ease;
+    display:none;
+}
+.gameResultPanel {
+    height:50%;
+    width:90%;
+    margin:0 auto;
+    background: url(../images/gameover/1.png) 0 0 no-repeat;
+    background-size: @backgroundimgWrapper;
+    -webkit-background-size: @backgroundimgWrapper;
+    -moz-background-size: @backgroundimgWrapper;
+    -o-background-size: @backgroundimgWrapper;
+    -webkit-transition: width 1s ease;
+    -moz-transition: width 1s ease;
+    -o-transition: width 1s ease;
+    transition: width 1s ease;
+}
+
 /*************响应式处理****************/
 
 @media screen and (min-width:750px) {
-    .contentWrapper, .gameContentWrapper {
+    .contentWrapper, .gameContentWrapper, .gameOverWrapper {
         width: 480px;
         height: 100%;
     }
@@ -394,6 +422,10 @@ ul {
     .gameContentTime {
         height:45px;
         width: 175px;
+    }
+    .gameResultPanel {
+        height:79%;
+        width:91%;
     }
 }
 
