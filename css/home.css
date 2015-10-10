@@ -50,6 +50,7 @@ ul {
     -moz-transition: width 1s ease;
     -o-transition: width 1s ease;
     transition: width 1s ease;
+    /*display:none;*/
 }
 
 
@@ -205,12 +206,12 @@ ul {
     border-collapse: collapse;
 }
 
-    .gameRecords table tr td {
-        text-align: center;
-        color: #9C2925;
-        width: 27%;
-        border-collapse: collapse;
-    }
+.gameRecords table tr td {
+    text-align: center;
+    color: #9C2925;
+    width: 27%;
+    border-collapse: collapse;
+}
 
 
 /****************游戏界面*****************/
@@ -226,6 +227,7 @@ ul {
     -o-transition: width 1s ease;
     transition: width 1s ease;
     left: -100%;
+    opacity:0;
 }
 
 .gameContentWrapperShow {
@@ -234,18 +236,13 @@ ul {
 }
 
 .gameContentWrapperHide {
-    -webkit-animation: aGameContentWrapperH 1s;
+    display:none;
 }
 
 @keyframes aGameContentWrapper {
     100% {
         left: 0;
-    }
-}
-
-@keyframes aGameContentWrapperH {
-    100% {
-        left: -100%;
+        opacity:1;
     }
 }
 
@@ -363,22 +360,239 @@ ul {
     -moz-transition: width 1s ease;
     -o-transition: width 1s ease;
     transition: width 1s ease;
-    display:none;
+    /*display:none;*/
 }
 .gameResultPanel {
-    height:50%;
-    width:90%;
+    position:relative;
+    /*height:50%;
+    width:85%;*/
+    height: 56%;
+    width: 85%;
     margin:0 auto;
     background: url(../images/gameover/1.png) 0 0 no-repeat;
-    background-size: @backgroundimgWrapper;
-    -webkit-background-size: @backgroundimgWrapper;
-    -moz-background-size: @backgroundimgWrapper;
-    -o-background-size: @backgroundimgWrapper;
+    background-size: @backgroundimgS;
+    -webkit-background-size: @backgroundimgS;
+    -moz-background-size: @backgroundimgS;
+    -o-background-size: @backgroundimgS;
     -webkit-transition: width 1s ease;
     -moz-transition: width 1s ease;
     -o-transition: width 1s ease;
     transition: width 1s ease;
+    opacity:0;
 }
+
+.gameResultPanelShow {
+    animation:aGameResultPanelShow .7s;
+    animation-fill-mode:forwards;
+}
+@keyframes aGameResultPanelShow {
+    0% {
+        transform:translateY(-30vh) scaleY(.98);
+    }
+     80% {
+       transform:translateY(4vh) scaleY(1.02);
+    }
+   100%{
+        transform:translateY(0vh) scaleY(.98);  
+        opacity: 1;
+    }
+}
+
+.gameResultPanelHide {
+    animation:aGameResultPanelHide 1.7s;
+    animation-fill-mode:forwards;
+}
+@keyframes aGameResultPanelHide {
+    0% {
+        transform:translateY(4vh) scaleY(.98);
+    }
+     80% {
+       transform:translateY(0vh) scaleY(1.02);
+    }
+   100%{
+        transform:translateY(-80vh) scaleY(.98);  
+        opacity: 0;
+    }
+}
+
+/**分数面板**/
+.scoresWrapper {
+    position:absolute;
+    width:80%;
+    height:70%;
+    left:10%;
+    top:10%;
+}
+/**等级**/
+.scoresLevel {
+    position:absolute;
+    top:31%;
+    right:13%;
+    width:25%;
+    height:20%;
+    margin-bottom:0;
+    background: url(../images/gameover/6.png) 0 0 no-repeat;
+    background-size: @backgroundimgS;
+    -webkit-background-size: @backgroundimgS;
+    -moz-background-size: @backgroundimgS;
+    -o-background-size: @backgroundimgS;
+    -webkit-transition: width 1s ease;
+    -moz-transition: width 1s ease;
+    -o-transition: width 1s ease;
+    transition: width 1s ease;    
+}
+.scoresWrapper .scroresBg {
+    width:52%;
+    height:23%;
+    margin:38% auto;
+    margin-bottom:0;
+    background: url(../images/gameover/2.png) 0 0 no-repeat;
+    background-size: @backgroundimgS;
+    -webkit-background-size: @backgroundimgS;
+    -moz-background-size: @backgroundimgS;
+    -o-background-size: @backgroundimgS;
+    -webkit-transition: width 1s ease;
+    -moz-transition: width 1s ease;
+    -o-transition: width 1s ease;
+    transition: width 1s ease;    
+}
+
+.scoresWrapper .scroresBg p{
+    text-align:center;
+    margin:0;
+    font-size:100%;
+    font-family:Arial;
+}
+.scoresWrapper .scroresBg p:nth-child(1) {
+    padding-top:3.5%;
+}
+.scroresDescription p {
+    text-align:center;
+    color:white;
+    margin:2px 0;
+}
+
+#yourHonor {
+    font-family:Arial;
+    color:#FFF402;
+    font-weight:bold;
+}
+
+.gameResultBtns {
+    width:100%;
+    height:17%;
+    margin-top:4%;
+}
+
+.gameResultBtns div {
+    margin-left:4%;
+    width:42%;
+    height:100%;
+    display:inline-block;
+}
+.shareToFriends {
+    -webkit-transition: width 1s ease;
+    -moz-transition: width 1s ease;
+    -o-transition: width 1s ease;
+    transition: width 1s ease;
+    background: url(../images/gameover/3.png) 0 0 no-repeat;
+    background-size: @backgroundimgS;
+    -webkit-background-size: @backgroundimgS;
+    -moz-background-size: @backgroundimgS;
+    -o-background-size: @backgroundimgS;
+}
+.oneMoreTime {
+    -webkit-transition: width 1s ease;
+    -moz-transition: width 1s ease;
+    -o-transition: width 1s ease;
+    transition: width 1s ease;
+    background: url(../images/gameover/4.png) 0 0 no-repeat;
+    background-size: @backgroundimgS;
+    -webkit-background-size: @backgroundimgS;
+    -moz-background-size: @backgroundimgS;
+    -o-background-size: @backgroundimgS;
+}
+
+/**排行面板**/
+.gameRankingListPanel {
+    position:relative;
+    /*height:50%;
+    width:85%;*/
+    top:-9.5%;
+    height: 38%;
+    width: 85%;
+    margin:0 auto;
+     -webkit-transition: width 1s ease;
+    -moz-transition: width 1s ease;
+    -o-transition: width 1s ease;
+    transition: width 1s ease;
+    background: url(../images/gameover/8.png) 0 0 no-repeat;
+    background-size: @backgroundimgS;
+    -webkit-background-size: @backgroundimgS;
+    -moz-background-size: @backgroundimgS;
+    -o-background-size: @backgroundimgS;
+    opacity:0;
+}
+.gameRankingListPanelShow{
+    animation:aGameRankingListPanelShow .7s;
+    animation-fill-mode:forwards;
+    animation-delay:1s;
+}
+@keyframes aGameRankingListPanelShow {
+    0% {
+        transform:translateY(-30vh) scaleY(.98);
+    }
+     80% {
+       transform:translateY(4vh) scaleY(1.02);
+    }
+   100%{
+        transform:translateY(0vh) scaleY(.98);  
+        opacity: 1;
+    }
+}
+
+.gameRankingListPanelHide{
+    animation:aGameRankingListPanelHide .7s;
+    animation-fill-mode:forwards;
+    animation-delay:1s;
+}
+@keyframes aGameRankingListPanelHide {
+    0% {
+        transform:translateY(0vh) scaleY(.98); 
+    }
+     80% {
+       transform:translateY(4vh) scaleY(1.02);
+    }
+   100%{
+        transform:translateY(-30vh) scaleY(.98);
+        opacity: 0;
+    }
+}
+
+
+.gameOverFooter {
+    position: absolute;
+    bottom: -4px;
+    height: 7%;
+    width: 100%;
+    margin: 0 auto;
+    -webkit-transition: width 1s ease;
+    -moz-transition: width 1s ease;
+    -o-transition: width 1s ease;
+    transition: width 1s ease;
+    background: url(../images/gameover/7.png) 0 0 no-repeat;
+    background-size: @backgroundimgS;
+    -webkit-background-size: @backgroundimgS;
+    -moz-background-size: @backgroundimgS;
+    -o-background-size: @backgroundimgS;
+    z-index: 99;
+}
+.gameOverFooter a {
+    display:block;
+    height:100%;
+    width:100%;
+}
+
 
 /*************响应式处理****************/
 
@@ -388,7 +602,7 @@ ul {
         height: 100%;
     }
 
-    .footer {
+    .footer{
         width: 480px;
         height: 190px;
     }
@@ -424,8 +638,22 @@ ul {
         width: 175px;
     }
     .gameResultPanel {
-        height:79%;
-        width:91%;
+        height: 60.6%;
+        width: 82.4%;
+    }
+    .gameOverFooter {
+        width: 480px;
+        height: 55px;
+    }
+    .gameOverFooter a {
+        display:block;
+        height:100%;
+        width:100%;
+    }
+    .gameRankingListPanel {
+        height: 42.6%;
+        width: 75.4%;
+        top:-4.5%;
     }
 }
 
@@ -494,3 +722,10 @@ ul {
         line-height:30px;
     }
 }
+
+/*@media screen and (min-width:320px) and (min-height:480px) {
+    .gameResultPanel {
+        height: 56%;
+        width: 85%;
+    }
+}*/
