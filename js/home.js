@@ -4,10 +4,10 @@
 
 /*游戏对象*/
 var game = {
-    maxTimeStr:'00:00:10',
+    maxTimeStr: '00:10:00',
     $cWrapper: null,
     $gWrapper: null,
-    $gOverWrapper:null,
+    $gOverWrapper: null,
     timeInterval: null,
     questionsArr: [{ qId: 1, qDescription: '在ps中，ctrl+v是复制的快捷键对么？', answer: true }, { qId: 2, qDescription: '在ps中，ctrl+v是复制的快捷键对么？', answer: true },
         { qId: 3, qDescription: '在ps中，ctrl+j是复制图层的快捷键对么？', answer: true }, { qId: 4, qDescription: '在ps中，ctrl+b是取消选区的快捷键对么？', answer: false },
@@ -123,8 +123,10 @@ var game = {
     setTimeOutInfo: function () {
         var that = this;
         var $timeLabel = this.$gWrapper.find('.timeDetailInfo');
-        this.timeInterval = window.setInterval(function () {
-            that.updateTimeShowInfo.call(that, $timeLabel);
+        window.setTimeout(function () {
+            that.timeInterval = window.setInterval(function () {
+                that.updateTimeShowInfo.call(that, $timeLabel);
+            }, 10);
         }, 1000);
     },
 
@@ -135,18 +137,24 @@ var game = {
 
     /*更新显示出来的时间*/
     updateTimeShowInfo: function ($label) {
-        var num = $label.text().split(':')[2] | 0;
-        if (num == 0) {
+        var numArr = $label.text().split(':'),
+            numS = numArr[1] | 0,
+            numMs = numArr[2] | 0;
+        if (numS == 0 & numMs == 0) {
             num = ('00:00:00');
             this.gameOver();
         } else {
-            num--;
-            if (num < 10) {
-                num = '0' + num;
+            if (numMs == 0) {
+                numMs = 99;
+                numS--;
             }
-            num = '00:00:' + num;
-            $label.text(num);
         }
+        if (numS < 10) {
+            numS = '0' + numS;
+        }
+        numMs -= 1;
+        $label.text('00:' + numS + ':' + numMs);
+
     },
 
     /*

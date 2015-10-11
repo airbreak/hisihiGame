@@ -83,9 +83,18 @@ ul {
     opacity: 0;
     margin-top: 22%;
     animation: aBtns .5s;
+    -webkit-animation: aBtns .5s;
+    -moz-animation: aBtns .5s;
+    -o-animation: aBtns .5s;
     /*animation:aBtns 5.5s;*/
     transition-delay: 5s;
+    -webkit-transition-delay: 5s;
+    -moz-transition-delay: 5s;
+    -o-transition-delay: 5s;
     animation-fill-mode: forwards;
+    -webkit-animation-fill-mode: forwards;
+    -moz-animation-fill-mode: forwards;
+    -o-animation-fill-mode: forwards;
 }
 
 @keyframes aBtns {
@@ -153,7 +162,7 @@ ul {
     -o-background-size: @backgroundimgS;
     -webkit-animation: aGameNotice .1s cubic-bezier(.15,.93,.9,.08);
     z-index: 100;
-    display:none;
+    display: none;
 }
 
     .gameNotice p {
@@ -164,8 +173,9 @@ ul {
 
 @keyframes aGameNotice {
     0% {
-        display:block;
+        display: block;
     }
+
     100% {
         left: 100%;
     }
@@ -206,12 +216,12 @@ ul {
     border-collapse: collapse;
 }
 
-.gameRecords table tr td {
-    text-align: center;
-    color: #9C2925;
-    width: 27%;
-    border-collapse: collapse;
-}
+    .gameRecords table tr td {
+        text-align: center;
+        color: #9C2925;
+        width: 27%;
+        border-collapse: collapse;
+    }
 
 
 /****************游戏界面*****************/
@@ -227,22 +237,28 @@ ul {
     -o-transition: width 1s ease;
     transition: width 1s ease;
     left: -100%;
-    opacity:0;
+    opacity: 0;
 }
 
 .gameContentWrapperShow {
+    animation: aGameContentWrapper 1s;
     -webkit-animation: aGameContentWrapper 1s;
+    -moz-animation: aGameContentWrapper 1s;
+    -o-animation: aGameContentWrapper 1s;
     animation-fill-mode: forwards;
+    -webkit-animation-fill-mode: forwards;
+    -moz-animation-fill-mode: forwards;
+    -o-animation-fill-mode: forwards;
 }
 
 .gameContentWrapperHide {
-    display:none;
+    display: none;
 }
 
 @keyframes aGameContentWrapper {
     100% {
         left: 0;
-        opacity:1;
+        opacity: 1;
     }
 }
 
@@ -287,67 +303,70 @@ ul {
     text-align: center;
 }
 
-.gameContentTime span {
-    float: left;
-    display: inline-block;
-    height: 68%;
-    width: 25%;
-    background: url(../images/gamecontent/5.png) 0 0 no-repeat;
-    background-size: @backgroundimgS;
-    -webkit-background-size: @backgroundimgS;
-    -moz-background-size: @backgroundimgS;
-    -o-background-size: @backgroundimgS;
-}
+    .gameContentTime span {
+        float: left;
+        display: inline-block;
+        height: 68%;
+        width: 25%;
+        background: url(../images/gamecontent/5.png) 0 0 no-repeat;
+        background-size: @backgroundimgS;
+        -webkit-background-size: @backgroundimgS;
+        -moz-background-size: @backgroundimgS;
+        -o-background-size: @backgroundimgS;
+    }
 
-.gameContentTime label {
-    float: left;
-    display: inline-block;
-    color: white;
-    line-height: 31px;
-    font-size: 32px;
-}
+    .gameContentTime label {
+        float: left;
+        display: inline-block;
+        color: white;
+        line-height: 31px;
+        font-size: 32px;
+    }
 
 .gameContentQuestion {
-    min-height:10%;
-    width:90%;
-    padding:0 5%;
-    background-color:#817C87;
-    text-align:center;
+    min-height: 10%;
+    width: 90%;
+    padding: 0 5%;
+    background-color: #817C87;
+    text-align: center;
 }
-.gameContentQuestion p {
-    font-size:20px;
-    color:white;
-    font-family:Arial;    
-    line-height:40px;
-    padding-top:10px;
-}
+
+    .gameContentQuestion p {
+        font-size: 20px;
+        color: white;
+        font-family: Arial;
+        line-height: 40px;
+        padding-top: 10px;
+    }
 
 .gameContentBtns {
-    height:10%;
-    width:90%;
-    padding:5%;
+    height: 10%;
+    width: 90%;
+    padding: 5%;
 }
 
-.gameContentBtns div {
-    margin-left:4%;
-    width:45%;
-    height:100%;
-    display:inline-block;
-}
-.gameContentBtns .btnYes {
-    background: url(../images/gamecontent/2.png) 0 0 no-repeat;
-    background-size: @backgroundimgS;
-    -webkit-background-size: @backgroundimgS;
-    -moz-background-size: @backgroundimgS;
-    -o-background-size: @backgroundimgS;
-}
-.gameContentBtns .btnNo {
-    background: url(../images/gamecontent/3.png) 0 0 no-repeat;
-    background-size: @backgroundimgS;
-    -webkit-background-size: @backgroundimgS;
-    -moz-background-size: @backgroundimgS;
-    -o-background-size: @backgroundimgS;
-}
+    .gameContentBtns div {
+        margin-left: 4%;
+        width: 45%;
+        height: 100%;
+        display: inline-block;
+    }
+
+    .gameContentBtns .btnYes {
+        background: url(../images/gamecontent/2.png) 0 0 no-repeat;
+        background-size: @backgroundimgS;
+        -webkit-background-size: @backgroundimgS;
+        -moz-background-size: @backgroundimgS;
+        -o-background-size: @backgroundimgS;
+    }
+
+    .gameContentBtns .btnNo {
+        background: url(../images/gamecontent/3.png) 0 0 no-repeat;
+        background-size: @backgroundimgS;
+        -webkit-background-size: @backgroundimgS;
+        -moz-background-size: @backgroundimgS;
+        -o-background-size: @backgroundimgS;
+    }
 
 /*****************游戏结束*********************/
 .gameOverWrapper {
@@ -362,13 +381,14 @@ ul {
     transition: width 1s ease;
     /*display:none;*/
 }
+
 .gameResultPanel {
-    position:relative;
+    position: relative;
     /*height:50%;
     width:85%;*/
     height: 56%;
     width: 85%;
-    margin:0 auto;
+    margin: 0 auto;
     background: url(../images/gameover/1.png) 0 0 no-repeat;
     background-size: @backgroundimgS;
     -webkit-background-size: @backgroundimgS;
@@ -378,59 +398,92 @@ ul {
     -moz-transition: width 1s ease;
     -o-transition: width 1s ease;
     transition: width 1s ease;
-    opacity:0;
+    opacity: 0;
 }
 
 .gameResultPanelShow {
-    animation:aGameResultPanelShow .7s;
-    animation-fill-mode:forwards;
+    animation: aGameResultPanelShow .7s;
+    -webkit-animation: aGameResultPanelShow .7s;
+    -moz-animation: aGameResultPanelShow .7s;
+    -o-animation: aGameResultPanelShow .7s;
+    -webkit-animation-fill-mode: forwards;
+    -moz-animation-fill-mode: forwards;
+    -o-animation-fill-mode: forwards;
+    animation-fill-mode: forwards;
 }
+
 @keyframes aGameResultPanelShow {
     0% {
-        transform:translateY(-30vh) scaleY(.98);
+        -webkit-transform: translateY(-30vh) scaleY(.98);
+        -moz-transform: translateY(-30vh) scaleY(.98);
+        -o-transform: translateY(-30vh) scaleY(.98);
+        transform: translateY(-30vh) scaleY(.98);
     }
-     80% {
-       transform:translateY(4vh) scaleY(1.02);
+
+    80% {
+        transform: translateY(4vh) scaleY(1.02);
+        -webkit-transform: translateY(4vh) scaleY(1.02);
+        -moz-transform: translateY(4vh) scaleY(1.02);
+        -o-transform: translateY(4vh) scaleY(1.02);
     }
-   100%{
-        transform:translateY(0vh) scaleY(.98);  
+
+    100% {
+        transform: translateY(0vh) scaleY(.98);
+        -webkit-transform: translateY(0vh) scaleY(.98);
+        -moz-transform: translateY(0vh) scaleY(.98);
+        -o-transform: translateY(0vh) scaleY(.98);
         opacity: 1;
     }
 }
 
 .gameResultPanelHide {
-    animation:aGameResultPanelHide 1.7s;
-    animation-fill-mode:forwards;
+    animation: aGameResultPanelHide 1.7s;
+    -webkit-animation: aGameResultPanelHide 1.7s;
+    -moz-animation: aGameResultPanelHide 1.7s;
+    -o-animation: aGameResultPanelHide 1.7s;
+    -webkit-animation-fill-mode: forwards;
+    -moz-animation-fill-mode: forwards;
+    -o-animation-fill-mode: forwards;
+    animation-fill-mode: forwards;
 }
+
 @keyframes aGameResultPanelHide {
     0% {
-        transform:translateY(4vh) scaleY(.98);
+        -webkit-transform: translateY(4vh) scaleY(.98);
+        -moz-transform: translateY(4vh) scaleY(.98);
+        -o-transform: translateY(4vh) scaleY(.98);
+        transform: translateY(4vh) scaleY(.98);
     }
-     80% {
-       transform:translateY(0vh) scaleY(1.02);
+
+    80% {
+        -webkit-transform: translateY(0vh) scaleY(1.02);
+        -moz-transform: translateY(0vh) scaleY(1.02);
+        -o-transform: translateY(0vh) scaleY(1.02);
+        transform: translateY(0vh) scaleY(1.02);
     }
-   100%{
-        transform:translateY(-80vh) scaleY(.98);  
+
+    100% {
+        -webkit-transform: translateY(-80vh) scaleY(.98);
         opacity: 0;
     }
 }
 
 /**分数面板**/
 .scoresWrapper {
-    position:absolute;
-    width:80%;
-    height:70%;
-    left:10%;
-    top:10%;
+    position: absolute;
+    width: 80%;
+    height: 70%;
+    left: 10%;
+    top: 10%;
 }
 /**等级**/
 .scoresLevel {
-    position:absolute;
-    top:31%;
-    right:13%;
-    width:25%;
-    height:20%;
-    margin-bottom:0;
+    position: absolute;
+    top: 31%;
+    right: 13%;
+    width: 25%;
+    height: 20%;
+    margin-bottom: 0;
     background: url(../images/gameover/6.png) 0 0 no-repeat;
     background-size: @backgroundimgS;
     -webkit-background-size: @backgroundimgS;
@@ -439,13 +492,14 @@ ul {
     -webkit-transition: width 1s ease;
     -moz-transition: width 1s ease;
     -o-transition: width 1s ease;
-    transition: width 1s ease;    
+    transition: width 1s ease;
 }
+
 .scoresWrapper .scroresBg {
-    width:52%;
-    height:23%;
-    margin:38% auto;
-    margin-bottom:0;
+    width: 52%;
+    height: 23%;
+    margin: 38% auto;
+    margin-bottom: 0;
     background: url(../images/gameover/2.png) 0 0 no-repeat;
     background-size: @backgroundimgS;
     -webkit-background-size: @backgroundimgS;
@@ -454,42 +508,48 @@ ul {
     -webkit-transition: width 1s ease;
     -moz-transition: width 1s ease;
     -o-transition: width 1s ease;
-    transition: width 1s ease;    
+    transition: width 1s ease;
 }
 
-.scoresWrapper .scroresBg p{
-    text-align:center;
-    margin:0;
-    font-size:100%;
-    font-family:Arial;
-}
-.scoresWrapper .scroresBg p:nth-child(1) {
-    padding-top:3.5%;
-}
+    .scoresWrapper .scroresBg p {
+        text-align: center;
+        margin: 0;
+        font-size: 100%;
+        font-family: Arial;
+    }
+
+        .scoresWrapper .scroresBg p:nth-child(1) {
+            padding-top: 3.5%;
+        }
+
 .scroresDescription p {
-    text-align:center;
-    color:white;
-    margin:2px 0;
+    text-align: center;
+    color: white;
+    margin: 2px 0;
+}
+#totalScores {
+    color:red;
 }
 
 #yourHonor {
-    font-family:Arial;
-    color:#FFF402;
-    font-weight:bold;
+    font-family: Arial;
+    color: #FFF402;
+    font-weight: bold;
 }
 
 .gameResultBtns {
-    width:100%;
-    height:17%;
-    margin-top:4%;
+    width: 100%;
+    height: 17%;
+    margin-top: 4%;
 }
 
-.gameResultBtns div {
-    margin-left:4%;
-    width:42%;
-    height:100%;
-    display:inline-block;
-}
+    .gameResultBtns div {
+        margin-left: 4%;
+        width: 42%;
+        height: 100%;
+        display: inline-block;
+    }
+
 .shareToFriends {
     -webkit-transition: width 1s ease;
     -moz-transition: width 1s ease;
@@ -501,6 +561,7 @@ ul {
     -moz-background-size: @backgroundimgS;
     -o-background-size: @backgroundimgS;
 }
+
 .oneMoreTime {
     -webkit-transition: width 1s ease;
     -moz-transition: width 1s ease;
@@ -515,14 +576,14 @@ ul {
 
 /**排行面板**/
 .gameRankingListPanel {
-    position:relative;
+    position: relative;
     /*height:50%;
     width:85%;*/
-    top:-9.5%;
+    top: -9.5%;
     height: 38%;
     width: 85%;
-    margin:0 auto;
-     -webkit-transition: width 1s ease;
+    margin: 0 auto;
+    -webkit-transition: width 1s ease;
     -moz-transition: width 1s ease;
     -o-transition: width 1s ease;
     transition: width 1s ease;
@@ -531,40 +592,83 @@ ul {
     -webkit-background-size: @backgroundimgS;
     -moz-background-size: @backgroundimgS;
     -o-background-size: @backgroundimgS;
-    opacity:0;
+    opacity: 0;
 }
-.gameRankingListPanelShow{
-    animation:aGameRankingListPanelShow .7s;
-    animation-fill-mode:forwards;
-    animation-delay:1s;
+
+.gameRankingListPanelShow {
+    animation: aGameRankingListPanelShow .7s;
+    -webkit-animation: aGameRankingListPanelShow .7s;
+    -moz-animation: aGameRankingListPanelShow .7s;
+    -o-animation: aGameRankingListPanelShow .7s;
+    -webkit-animation-fill-mode: forwards;
+    -moz-animation-fill-mode: forwards;
+    -o-animation-fill-mode: forwards;
+    animation-fill-mode: forwards;
+    -webkit-animation-delay: 1s;
+    -moz-animation-delay: 1s;
+    -o-animation-delay: 1s;
+    animation-delay: 1s;
 }
+
 @keyframes aGameRankingListPanelShow {
     0% {
-        transform:translateY(-30vh) scaleY(.98);
+        -webkit-transform: translateY(-30vh) scaleY(.98);
+        -moz-transform: translateY(-30vh) scaleY(.98);
+        -o-transform: translateY(-30vh) scaleY(.98);
+        transform: translateY(-30vh) scaleY(.98);
     }
-     80% {
-       transform:translateY(4vh) scaleY(1.02);
+
+    80% {
+        -webkit-transform: translateY(4vh) scaleY(1.02);
+        -moz-transform: translateY(4vh) scaleY(1.02);
+        -o-transform: translateY(4vh) scaleY(1.02);
+        transform: translateY(4vh) scaleY(1.02);
     }
-   100%{
-        transform:translateY(0vh) scaleY(.98);  
+
+    100% {
+        -webkit-transform: translateY(0vh) scaleY(.98);
+        -moz-transform: translateY(0vh) scaleY(.98);
+        -o-transform: translateY(0vh) scaleY(.98);
+        transform: translateY(0vh) scaleY(.98);
         opacity: 1;
     }
 }
 
-.gameRankingListPanelHide{
-    animation:aGameRankingListPanelHide .7s;
-    animation-fill-mode:forwards;
-    animation-delay:1s;
+.gameRankingListPanelHide {
+    -webkit-animation: aGameRankingListPanelHide .7s;
+    -moz-animation: aGameRankingListPanelHide .7s;
+    -o-animation: aGameRankingListPanelHide .7s;
+    animation: aGameRankingListPanelHide .7s;
+    -webkit-animation-fill-mode: forwards;
+    -moz-animation-fill-mode: forwards;
+    -o-animation-fill-mode: forwards;
+    animation-fill-mode: forwards;
+    -webkit-animation-delay: 1s;
+    -moz-animation-delay: 1s;
+    -o-animation-delay: 1s;
+    animation-delay: 1s;
 }
+
 @keyframes aGameRankingListPanelHide {
     0% {
-        transform:translateY(0vh) scaleY(.98); 
+        -webkit-transform: translateY(0vh) scaleY(.98);
+        -moz-transform: translateY(0vh) scaleY(.98);
+        -o-transform: translateY(0vh) scaleY(.98);
+        transform: translateY(0vh) scaleY(.98);
     }
-     80% {
-       transform:translateY(4vh) scaleY(1.02);
+
+    80% {
+        -webkit-transform: translateY(4vh) scaleY(1.02);
+        -moz-transform: translateY(4vh) scaleY(1.02);
+        -o-transform: translateY(4vh) scaleY(1.02);
+        transform: translateY(4vh) scaleY(1.02);
     }
-   100%{
-        transform:translateY(-30vh) scaleY(.98);
+
+    100% {
+        -webkit-transform: translateY(-30vh) scaleY(.98);
+        -moz-transform: translateY(-30vh) scaleY(.98);
+        -o-transform: translateY(-30vh) scaleY(.98);
+        transform: translateY(-30vh) scaleY(.98);
         opacity: 0;
     }
 }
@@ -587,10 +691,11 @@ ul {
     -o-background-size: @backgroundimgS;
     z-index: 99;
 }
+
 .gameOverFooter a {
-    display:block;
-    height:100%;
-    width:100%;
+    display: block;
+    height: 100%;
+    width: 100%;
 }
 
 
@@ -602,7 +707,7 @@ ul {
         height: 100%;
     }
 
-    .footer{
+    .footer {
         width: 480px;
         height: 190px;
     }
@@ -634,26 +739,30 @@ ul {
     }
 
     .gameContentTime {
-        height:45px;
+        height: 45px;
         width: 175px;
     }
+
     .gameResultPanel {
         height: 60.6%;
         width: 82.4%;
     }
+
     .gameOverFooter {
         width: 480px;
         height: 55px;
     }
-    .gameOverFooter a {
-        display:block;
-        height:100%;
-        width:100%;
-    }
+
+        .gameOverFooter a {
+            display: block;
+            height: 100%;
+            width: 100%;
+        }
+
     .gameRankingListPanel {
         height: 42.6%;
         width: 75.4%;
-        top:-4.5%;
+        top: -4.5%;
     }
 }
 
@@ -715,11 +824,12 @@ ul {
 
     .gameContentTime label {
         font-size: 25px;
-        line-height:24px;
+        line-height: 24px;
     }
+
     .gameContentQuestion p {
         font-size: 19px;
-        line-height:30px;
+        line-height: 30px;
     }
 }
 
