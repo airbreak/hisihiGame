@@ -1,22 +1,30 @@
-﻿$(function () {
+﻿/// <reference path="jquery-1.8.2.min.js" />
+
+$(function () {
     game.initialize();
 });
 
 /*游戏对象*/
 var game = {
-    maxTimeStr: '00:10:00',
+    maxTimeStr: '00:15:00',
     $cWrapper: null,
     $gWrapper: null,
     $gOverWrapper: null,
     timeInterval: null,
-    questionsArr: [{ qId: 1, qDescription: '在ps中，ctrl+v是复制的快捷键对么？', answer: true }, { qId: 2, qDescription: '在ps中，ctrl+v是复制的快捷键对么？', answer: true },
-        { qId: 3, qDescription: '在ps中，ctrl+j是复制图层的快捷键对么？', answer: true }, { qId: 4, qDescription: '在ps中，ctrl+b是取消选区的快捷键对么？', answer: false },
-        { qId: 5, qDescription: '在ps中，p是快速蒙板的快捷键对么？', answer: true }, { qId: 6, qDescription: '在ps中，ctrl+i是反向选择的快捷键对么？', answer: true },
-        { qId: 7, qDescription: '在ps中，ctrl+t是标尺的快捷键对么？', answer: false }, { qId: 8, qDescription: '在ps中，b是的画笔的快捷键对么？', answer: true },
-        { qId: 9, qDescription: '在ps中，ctrl+r是自由绽放的快捷键对么？', answer: false }, { qId: 10, qDescription: '在ps中，g是复制的快捷键对么？', answer: false }
-    ],
+    questionsArr: allQuestionsArr,
     answersArr: [],  //答题情况
     totalScores: 0,  //总分
+
+    /*连击情况*/
+    doubleHitNums: 0,
+    doubleHitNumsArr: [],
+
+    /*已答总题数*/
+    totalDoneQuestionsNum: 0,
+
+    /*最后一题的答题情况*/
+    lastOneAnswerFlag: false,
+
     /**初始化游戏**/
     initialize: function () {
         this.$cWrapper = $('.contentWrapper');
@@ -55,15 +63,20 @@ var game = {
                   qid = $q.attr('data-qid'),  //当前题号
                   currentAnswer = !$(this).index();//当前题号的答案
 
+
             //保存所回答问题
             that.answersArr.push({
                 qid: qid,
                 answer: currentAnswer
             });
+
+            /*当前题目答题情况判断*/
+            that.checkoutCurrentAnswer(qid, currentAnswer);
+
             that.fillInQuestionToDom();   //随机出题
         });
 
-        /*分享和 再来一盘*/
+        /*分享和 再来一局*/
         that.$gOverWrapper.on('click', '.oneMoreTime', function () {
             var index = $(this).index();
             if (index == 1) {
@@ -83,7 +96,7 @@ var game = {
             this.questionsArr = data;
             this.fillInQuestionToDom();   //随机出题
             this.initTimeDetailInfo();//初始化时间
-            this.setTimeOutInfo();
+            this.setTimeOutInfo(1000);
         });
     },
 
@@ -98,6 +111,48 @@ var game = {
 
     },
 
+    /*
+    *当前题目对错判断
+    *Parameters:
+    *qid:{string} 当前题号id,
+    *currentAnswer:{bool}当前选择答案 true | false
+    */
+    checkoutCurrentAnswer: function (qid, currentAnswer) {
+        window.clearInterval(this.timeInterval);  /*暂停计时器*/
+        var that = this,
+            $p = this.$gWrapper.find('.doubleHitInfo > p'),
+            $hitNums = $p.find('.doubleHitNums');
+        var temp = $.grep(that.questionsArr, function (item, key) {
+            return item.qId == qid;
+        })[0];
+
+        //答题正确
+        if (temp.answer == currentAnswer) {
+            this.doubleHitNums++;
+            $hitNums.text(this.doubleHitNums);
+            if (this.doubleHitNums > 1) {
+                $p.addClass('doubleHitNumsShow');
+            }
+            that.lastOneAnswerFlag = true;
+        }
+
+            //答题错误
+        else {
+            $p.removeClass('doubleHitNumsShow');
+            this.doubleHitNumsArr.push(this.doubleHitNums);
+            this.doubleHitNums = 0;
+            that.lastOneAnswerFlag = false;
+            $('.wrongAnsweInfo').addClass('wrongAnsweInfoShow');
+        }
+
+        /*重启计时器*/
+        this.timeInterval = window.setTimeout(function () {
+            $('.wrongAnsweInfo').removeClass('wrongAnsweInfoShow');
+            $p.removeClass('doubleHitNumsShow');
+            that.setTimeOutInfo(0);
+        }, 500);
+    },
+
     /*填充问题内容*/
     fillInQuestionToDom: function () {
         var $q = this.$gWrapper.find('.gameContentQuestion'),
@@ -105,12 +160,12 @@ var game = {
              qInfo = this.showQuestionByRandom(oQId);
         $q.attr('data-qid', qInfo.qId);
         $q.find('p').text(qInfo.qDescription);
+        this.changeQuestionTileAndBg();
     },
 
     /*随机出题*/
     showQuestionByRandom: function (oQId) {
-        var index = Math.random() * this.questionsArr.length;
-        index = Math.round(index);
+        var index = this.getRandomNum(this.questionsArr.length);
         var qIf = this.questionsArr[index];
         if (qIf && oQId != qIf.qId) {
             return qIf;
@@ -119,15 +174,24 @@ var game = {
         }
     },
 
+    /*更换题号和背景图*/
+    changeQuestionTileAndBg: function () {
+        this.totalDoneQuestionsNum++;
+        //var questionNumImg = '../images/gamecontent/n' + this.totalDoneQuestionsNum + '.png',
+        var  bgImg = '../images/gamecontent/p' + this.getRandomNum(1, 5) + '.png';
+        this.$gWrapper.find('.gameContentPeople').css('background-image', 'url(' + bgImg + ')');
+        this.$gWrapper.find('#totalDoneQuestionsNum').text(this.totalDoneQuestionsNum);
+    },
+
     /*设置计时器*/
-    setTimeOutInfo: function () {
+    setTimeOutInfo: function (num) {
         var that = this;
         var $timeLabel = this.$gWrapper.find('.timeDetailInfo');
         window.setTimeout(function () {
             that.timeInterval = window.setInterval(function () {
                 that.updateTimeShowInfo.call(that, $timeLabel);
             }, 10);
-        }, 1000);
+        }, num);
     },
 
     /*初始化最大时间*/
@@ -164,40 +228,6 @@ var game = {
     gameOver: function () {
         console.log('时间到！');
         window.clearInterval(this.timeInterval);
-        var that = this,
-            doubleHitArr = [];
-
-        //得到具体的 答对情况数组
-        $.each(this.answersArr, function () {
-            var qid = this.qid,
-                answer = this.answer;
-            $.each(that.questionsArr, function () {
-                if (qid == this.qId.toString()) {
-                    var flag = false;
-                    if (answer == this.answer) {
-                        flag = true;
-                    }
-                    doubleHitArr.push(flag);
-                }
-            });
-        });
-
-        var i = 0,
-            length = doubleHitArr.length;
-
-        for (var j = 0; j < length; j++) {
-            if (doubleHitArr[j]) {
-                i++;
-            } else {
-                if (i != 0) {
-                    that.calculateScroes(i);
-                }
-                i = 0;
-            }
-        }
-        if (i != 0) {
-            that.calculateScroes(i);
-        }
         this.showGameResultPanel();  //显示本次游戏结果
         this.commitResultToService();//将游戏结果传到服务器
     },
@@ -211,8 +241,19 @@ var game = {
     *   4连击*4  +331776分
     *
     */
-    calculateScroes: function (i) {
-        this.totalScores += Math.pow(24, i);
+    calculateScroes: function () {
+        var scores = 0;
+
+        //最一次答案，防止在没有出现错题的情况下，没有进行连击的计算
+        if (this.lastOneAnswerFlag) {
+            this.doubleHitNumsArr.push(this.doubleHitNums);
+        }
+        $.each(this.doubleHitNumsArr, function () {
+            if (this != 0) {
+                scores += Math.pow(24, this);
+            }
+        });
+        return scores;
     },
 
     /*将游戏结果传到服务器*/
@@ -223,7 +264,7 @@ var game = {
     /*显示本次游戏和排行*/
     showGameResultPanel: function () {
         this.$gOverWrapper.show();
-        $('#totalScores').text(this.totalScores);
+        $('#totalScores').text(this.calculateScroes());
         this.swapClass(this.$gWrapper, 'gameContentWrapperShow', 'gameContentWrapperHide');
         this.swapClass(this.$gOverWrapper.find('.gameResultPanel'), 'gameResultPanelHide', 'gameResultPanelShow');
         this.swapClass(this.$gOverWrapper.find('.gameRankingListPanel'), 'gameRankingListPanelHide', 'gameRankingListPanelShow');
@@ -241,6 +282,7 @@ var game = {
     restarGame: function () {
         this.clearGameInfo();  //清除上次游戏信息
         this.$cWrapper.delay(500).show(0);
+
         this.swapClass(this.$gWrapper, 'gameContentWrapperShow', 'gameContentWrapperHide');
         this.swapClass(this.$gOverWrapper.find('.gameResultPanel'), 'gameResultPanelShow', 'gameResultPanelHide');
         this.swapClass(this.$gOverWrapper.find('.gameRankingListPanel'), 'gameRankingListPanelShow', 'gameRankingListPanelHide');
@@ -251,9 +293,35 @@ var game = {
         $('#totalScores').text('');
         this.totalScores = 0;
         this.answersArr = [];
+        this.doubleHitNums = 0;
+        this.doubleHitNumsArr = [];
+        this.totalDoneQuestionsNum = 0;
     },
 
-    /*样式转换*/
+    /*
+    *得到随机数
+    *Parameters:
+    *minNum - {int} 可能出现的最小值
+    *maxNum - {int} 可能出现的最大值
+    *Returns:
+    *num - {int} 得到的随机数
+    */
+    getRandomNum: function (maxNum, minNum) {
+        if (!minNum) {
+            minNum = 0;
+        }
+        var range = maxNum - minNum;
+        var index = Math.round(Math.random() * range) + minNum;
+        return index;
+    },
+
+    /*
+    *样式转换
+    *Parameters:
+    *$target - {jquery object} jquery对象
+    *oClass - {string} 旧类
+    *nClass - {string} 
+    */
     swapClass: function ($target, oClass, nClass) {
         $target.removeClass(oClass).addClass(nClass);
     },

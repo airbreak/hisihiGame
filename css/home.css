@@ -24,6 +24,10 @@ ul {
         list-style: none;
     }
 
+.btnsItem:active {
+    transform: scale(0.9,0.9);
+}
+
 .wrapper {
     position: relative;
     margin: 0 auto;
@@ -83,20 +87,35 @@ ul {
     opacity: 0;
     margin-top: 22%;
     animation: aBtns .5s;
-    -webkit-animation: aBtns .5s;
+    /*-webkit-animation: aBtns .5s;
     -moz-animation: aBtns .5s;
-    -o-animation: aBtns .5s;
+    -o-animation: aBtns .5s;*/
     /*animation:aBtns 5.5s;*/
     transition-delay: 5s;
-    -webkit-transition-delay: 5s;
+    /*-webkit-transition-delay: 5s;
     -moz-transition-delay: 5s;
-    -o-transition-delay: 5s;
+    -o-transition-delay: 5s;*/
     animation-fill-mode: forwards;
-    -webkit-animation-fill-mode: forwards;
+    /*-webkit-animation-fill-mode: forwards;
     -moz-animation-fill-mode: forwards;
-    -o-animation-fill-mode: forwards;
+    -o-animation-fill-mode: forwards;*/
 }
 
+/*@-webkit-keyframes aBtns {
+    100% {
+        opacity: 1;
+    }
+}
+@-moz-keyframes aBtns {
+    100% {
+        opacity: 1;
+    }
+}
+@-o-keyframes aBtns {
+    100% {
+        opacity: 1;
+    }
+}*/
 @keyframes aBtns {
     100% {
         opacity: 1;
@@ -113,6 +132,7 @@ ul {
     -moz-background-size: @backgroundimgS;
     -o-background-size: @backgroundimgS;
 }
+
 
 .showRecord {
     width: 55%;
@@ -276,11 +296,17 @@ ul {
     width: 32%;
     height: 80%;
     margin: 0 auto;
-    background: url(../images/gamecontent/n1.png) 0 0 no-repeat;
+    margin-top:-2px;
+    font-size:14px;
+    color:#181411;
+    /*background: url(../images/gamecontent/n1.png) 0 0 no-repeat;
     background-size: @backgroundimgS;
     -webkit-background-size: @backgroundimgS;
     -moz-background-size: @backgroundimgS;
-    -o-background-size: @backgroundimgS;
+    -o-background-size: @backgroundimgS;*/
+}
+#totalDoneQuestionsNum {
+    color:#EEC418 !important;
 }
 
 /**人物**/
@@ -324,7 +350,7 @@ ul {
     }
 
 .gameContentQuestion {
-    min-height: 10%;
+    min-height: 15%;
     width: 90%;
     padding: 0 5%;
     background-color: #817C87;
@@ -339,10 +365,80 @@ ul {
         padding-top: 10px;
     }
 
+/**答对连击答题情况显示**/
+.doubleHitInfo {
+    opacity: 1;
+    height: 5%;
+    width: 100%;
+    position: relative;
+    top:-6%;
+}
+
+.doubleHitInfo p {
+    font-size: 150px;
+    color: #FFF501;
+    font-family: Arial;
+    line-height: 40px;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    width: 40%;
+    height: 100%;
+    position: absolute;
+    right: -40%;
+}
+
+
+.doubleHitNumsShow {
+    animation: aDoubleHitNumsShow 0.5s cubic-bezier(.15,.93,.9,.08);
+    /*animation-fill-mode:forwards;*/
+}
+
+@keyframes aDoubleHitNumsShow {
+    100% {
+        right: 100%;
+    }
+}
+
+/**答错了**/
+.wrongAnsweInfo {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    z-index: -1;
+    opacity: 0;
+    background: url(../images/gamecontent/10.png) 0 0 no-repeat;
+    background-size: @backgroundimgWrapper;
+    transition: width 1s ease;
+}
+
+.wrongAnsweInfoShow {
+    animation: aWrongAnsweInfoShow .5s;
+}
+
+@keyframes aWrongAnsweInfoShow {
+    0%,60%,100% {
+        opacity:0;
+    }
+    1% {
+        z-index:100;
+    }
+    50% {
+        opacity:1;
+    }   
+    85% {
+        opacity:1;
+    }
+}
+
+/**答题按钮**/
 .gameContentBtns {
     height: 10%;
     width: 90%;
     padding: 5%;
+    padding-top:0;
 }
 
     .gameContentBtns div {
@@ -527,14 +623,16 @@ ul {
     color: white;
     margin: 2px 0;
 }
+
 #totalScores {
-    color:red;
+    color: red;
 }
 
 #yourHonor {
-    font-family: Arial;
+    font-family: 'Microsoft YaHei';
     color: #FFF402;
     font-weight: bold;
+    font-size: 150%;
 }
 
 .gameResultBtns {
@@ -677,7 +775,7 @@ ul {
 .gameOverFooter {
     position: absolute;
     bottom: -4px;
-    height: 7%;
+    height: 9%;
     width: 100%;
     margin: 0 auto;
     -webkit-transition: width 1s ease;
@@ -692,11 +790,11 @@ ul {
     z-index: 99;
 }
 
-.gameOverFooter a {
-    display: block;
-    height: 100%;
-    width: 100%;
-}
+    .gameOverFooter a {
+        display: block;
+        height: 100%;
+        width: 100%;
+    }
 
 
 /*************响应式处理****************/
@@ -737,7 +835,10 @@ ul {
         width: 200px;
         height: 45px;
     }
-
+    .questionNum {
+        font-size:19px;
+        margin-top:-3px;
+    }
     .gameContentTime {
         height: 45px;
         width: 175px;
