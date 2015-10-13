@@ -6,13 +6,13 @@ $(function () {
 
 /*游戏对象*/
 var game = {
-    maxTimeStr: '00:01:00',
+    maxTimeStr: '00:15:00',
     $cWrapper: null,
     $gWrapper: null,
     $gOverWrapper: null,
     timeInterval: null,
     questionsArr: allQuestionsArr,
-    answersArr: [],  //答题情况
+    answersArr: [],  //答题情况  预留的
     totalScores: 0,  //总分
 
     /*连击情况*/
@@ -25,12 +25,20 @@ var game = {
     /*最后一题的答题情况*/
     lastOneAnswerFlag: false,
 
+    namsAndLevelsArr: [{ level: 'SSS', levelImg: '../images/gameover/sss.png', name: '神级设计师', max: 300000000000, min: 25000 },
+        { level: 'S', levelImg: '../images/gameover/s.png', name: '千年古尸', max: 24900, min: 20000 },
+        { level: 'A', levelImg: '../images/gameover/a.png', name: '松狮', max: 19900, min: 15000 },
+        { level: 'B', levelImg: '../images/gameover/b.png', name: '山村老尸', max: 14900, min: 10000 },
+        { level: 'C', levelImg: '../images/gameover/c.png', name: '村口王师傅', max: 9900, min: 5000 },
+        { level: 'D', levelImg: '../images/gameover/d.png', name: '苍老湿', max: 4900, min: 0 }],
+
     /**初始化游戏**/
     initialize: function () {
         this.$cWrapper = $('.contentWrapper');
         this.$gWrapper = $('.gameContentWrapper');
         this.$gOverWrapper = $('.gameOverWrapper');
         this.eventsInit();
+        this.setRecordsAndNoticeStyle();
     },
 
     /*事件注册*/
@@ -44,8 +52,8 @@ var game = {
         $btns.on('click', 'div', function () {
             var index = $(this).index();
             if (index == 1) {
-                $btns.hide();
-                $('.gameRecords').show();
+                that.$cWrapper.find('.gameNotice').hide();
+                that.$cWrapper.find('.gameRecords').show();
             } else {
                 that.showGameContentWrapper();
             }
@@ -53,8 +61,17 @@ var game = {
 
         /*关闭记录*/
         $recorders.on('click', '.closeGameRecords', function () {
-            $btns.show();
             $recorders.hide();
+        });
+
+        /*显示游戏规则*/
+        this.$cWrapper.on('click', '.aboutGameNotice', function () {
+            that.$cWrapper.find('.gameRecords').hide();
+            that.$cWrapper.find('.gameNotice').show();
+        });
+
+        this.$cWrapper.on('click', '.closeGameNotice', function () {
+            that.$cWrapper.find('.gameNotice').hide();
         });
 
         /*题目答案选择*/
@@ -84,8 +101,7 @@ var game = {
             }
         });
 
-        $('.btnsItem').on('touchstart', function (){});
-        //document.body.addEventListener('touchstart', function () { //...空函数即可}); 
+        $('.btnsItem').on('touchstart', function () { });
     },
 
     /*
@@ -124,7 +140,8 @@ var game = {
         window.clearInterval(this.timeInterval);  /*暂停计时器*/
         var that = this,
             $p = this.$gWrapper.find('.doubleHitInfo > p'),
-            $hitNums = $p.find('.doubleHitNums');
+            $hitNums = $p.find('.doubleHitNums'),
+            $btns = this.$gWrapper.find('.gameContentBtns>div');
         var temp = $.grep(that.questionsArr, function (item, key) {
             return item.qId == qid;
         })[0];
@@ -132,8 +149,13 @@ var game = {
         //答题正确
         if (temp.answer == currentAnswer) {
             this.doubleHitNums++;
-            $hitNums.text(this.doubleHitNums);
+            var $temp = $btns.eq(!currentAnswer);
+            $temp.addClass('btnsCorrect');
+            window.setTimeout(function () {
+                $temp.removeClass('btnsCorrect');  //显示正确效果
+            }, 100);
             if (this.doubleHitNums > 1) {
+                $hitNums.text(this.doubleHitNums);
                 $p.addClass('doubleHitNumsShow');
             }
             that.lastOneAnswerFlag = true;
@@ -147,9 +169,10 @@ var game = {
             that.lastOneAnswerFlag = false;
             $('.wrongAnsweInfo').addClass('wrongAnsweInfoShow');
         }
-
+        $('.rightAnsweInfo').show().delay(500).hide(0);
         /*重启计时器*/
-        this.timeInterval = window.setTimeout(function () {
+        window.setTimeout(function () {
+            //$btns.removeClass('btnsCorrect')
             $('.wrongAnsweInfo').removeClass('wrongAnsweInfoShow');
             $p.removeClass('doubleHitNumsShow');
             that.setTimeOutInfo(0);
@@ -181,7 +204,7 @@ var game = {
     changeQuestionTileAndBg: function () {
         this.totalDoneQuestionsNum++;
         //var questionNumImg = '../images/gamecontent/n' + this.totalDoneQuestionsNum + '.png',
-        var  bgImg = '../images/gamecontent/p' + this.getRandomNum(1, 5) + '.png';
+        var bgImg = '../images/gamecontent/p' + this.getRandomNum(1, 5) + '.png';
         this.$gWrapper.find('.gameContentPeople').css('background-image', 'url(' + bgImg + ')');
         this.$gWrapper.find('#totalDoneQuestionsNum').text(this.totalDoneQuestionsNum);
     },
@@ -191,6 +214,7 @@ var game = {
         var that = this;
         var $timeLabel = this.$gWrapper.find('.timeDetailInfo');
         window.setTimeout(function () {
+            window.clearInterval(that.timeInterval);
             that.timeInterval = window.setInterval(function () {
                 that.updateTimeShowInfo.call(that, $timeLabel);
             }, 10);
@@ -234,17 +258,21 @@ var game = {
     gameOver: function () {
         console.log('时间到！');
         window.clearInterval(this.timeInterval);
-        this.showGameResultPanel();  //显示本次游戏结果
-        this.commitResultToService();//将游戏结果传到服务器
+        this.showDetailGameScores();/*显示具体的分数，并将游戏结果传到服务器*/
+        this.gameOverStyleChage();  //显示本次游戏结果
+
     },
 
     /*
     *游戏得分计算
     *根据连击情况计算分数
-    *计算规则 ：24 的 n次方
-    *   2连击*2  +576分
-    *   3连击*3  +13824分
-    *   4连击*4  +331776分
+    *计算规则 ：
+    1题                 +100分
+    2连击2*500    +1000分    
+    3连击3*500    +1500分   
+    4连击4*500    +2000分   
+    ···
+    30···30*500    +15000分
     *
     */
     calculateScroes: function () {
@@ -255,26 +283,89 @@ var game = {
             this.doubleHitNumsArr.push(this.doubleHitNums);
         }
         $.each(this.doubleHitNumsArr, function () {
-            if (this != 0) {
-                scores += Math.pow(24, this);
+            scores += this * 100;
+            if (this != 1) {
+                scores += this * 500;
             }
         });
         return scores;
     },
 
-    /*将游戏结果传到服务器*/
-    commitResultToService: function () {
+    /*
+    *根据游戏得分计算称号
+    */
+    calculateName: function () {
 
     },
 
-    /*显示本次游戏和排行*/
-    showGameResultPanel: function () {
+    /*将游戏结果传到服务器*/
+    commitResultToService: function (recorInfo) {
+        /*本地存储*/
+        var storage = window.localStorage,
+           recordsStr = storage.myGameRecords,
+           recordsArr = JSON.parse(recordsStr);
+        if (recordsArr == null) {
+            recordsArr = [];
+        }
+        recordsArr.push(recorInfo);
+        storage.myGameRecords = JSON.stringify(recordsArr);
+        /*上传服务器*/
+    },
+
+    /*显示本次游戏 界面效果*/
+    gameOverStyleChage: function () {
         this.$gOverWrapper.show();
-        $('#totalScores').text(this.calculateScroes());
+        this.$gWrapper.find('.gameContentBtns>div').removeClass('btnsCorrect');
         this.swapClass(this.$gWrapper, 'gameContentWrapperShow', 'gameContentWrapperHide');
         this.swapClass(this.$gOverWrapper.find('.gameResultPanel'), 'gameResultPanelHide', 'gameResultPanelShow');
-        this.swapClass(this.$gOverWrapper.find('.scoresLevel'), 'scoreLevelHide', 'scoreLevelShow');
         this.swapClass(this.$gOverWrapper.find('.gameRankingListPanel'), 'gameRankingListPanelHide', 'gameRankingListPanelShow');
+    },
+
+    /*
+    *显示具体的分数，将游戏结果传到服务器
+    *制作一个分数滚动效果
+    */
+    showDetailGameScores: function () {
+        var that = this,
+            $scores = $('#totalScores'),
+            totalScores = this.calculateScroes(),
+            interval = 10,
+            baseScore = 0;
+        this.totalScores = totalScores;
+
+        //得到等级、名称
+        var levelsItem = $.grep(this.namsAndLevelsArr, function (item) {
+            return item.max >= totalScores && item.min <= totalScores;
+        })[0];
+        baseScore = levelsItem.min;  //设计滚动时的最小数
+
+        if (totalScores > 1000 && totalScores - baseScore <= 250) {
+            baseScore = totalScores - 250;
+        }
+        //滚动计时器
+        if (totalScores > 100) {
+            var tempInterval = window.setInterval(function () {
+                baseScore += 50;
+                $scores.text(baseScore);
+                if (baseScore == totalScores) {
+                    window.clearInterval(tempInterval);
+                    that.setNameAndLevelInfo(levelsItem);   //设置等级和名称
+                }
+            }, interval);
+        } else {
+            $scores.text(totalScores);
+            that.setNameAndLevelInfo(levelsItem);   //设置等级和名称
+        }
+        var record = { name: levelsItem.name, level: levelsItem.level, date: new Date().format('yyyy-MM-dd'), scores: this.totalScores + '分' };
+        this.commitResultToService(record);    /*将游戏结果传到服务器*/
+    },
+
+    /*设置等级和名称*/
+    setNameAndLevelInfo: function (levelsItem) {
+        var $target = this.$gOverWrapper.find('.scoresLevel');
+        $target.css('background-image', 'url(' + levelsItem.levelImg + ')');  //设置等级图片  
+        this.swapClass($target, 'scoreLevelHide', 'scoreLevelShow');
+        this.$gOverWrapper.find('#yourHonor').text(levelsItem.name);//设置等级名称
     },
 
     /*
@@ -334,26 +425,70 @@ var game = {
         $target.removeClass(oClass).addClass(nClass);
     },
 
+    /*让游戏记录，公告等居中显示*/
+    setRecordsAndNoticeStyle: function () {
+        var h = this.$cWrapper.height(),
+            w = this.$cWrapper.width(),
+            $records = this.$cWrapper.find('.gameRecords'),
+            rw = $records.width(),
+            rh = $records.height(),
+            $notice = this.$cWrapper.find('.gameNotice'),
+            nw = $notice.width(),
+            nh = $notice.height();
+        $records.css({ 'top': (h - rh) / 2.6, 'left': (w - rw) / 2 });
+        $notice.css({ 'top': (h - nh) / 2.6, 'left': (w - nw) / 2 });
+    },
+
     OBJECT_NAME: 'game'
 };
 
 /*angularjs 数据绑定*/
 var app = angular.module('myApp', []);
 app.controller('gameRecordsController', function ($scope, $http) {
-    var data = [{ name: '神级设计尸', date: '2015.9.28', scores: '45665分' }, { name: '新东方厨师', date: '2015.9.28', scores: 42665 },
-        { name: '千年老尸', date: '2015.9.28', scores: 40665 }, { name: '苍老师', date: '2015.9.28', scores: 35665 },
-        { name: '撸大湿', date: '2015.9.28', scores: 25665 }, { name: '村口王师傅', date: '2015.9.28', scores: 15665 }];
-    $scope.items = data;
-    //$http({
-    //    method: 'POST',
-    //    url: '/Shop/Products',
-    //    data: { fileInfo: 'dds' },
-    //    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
 
-    //}).success(function (data) {
-    //    data = JSON.parse(data);
-    //    $scope.items = data;
-    //}).error(function () {
-    //    alert('error');
-    //});
+    var storage = window.localStorage,
+        records = storage.getItem('myGameRecords'),
+        data = JSON.parse(records),
+        $p = $('.gameRecordsContent p');
+
+    //var data = [{ name: '神级设计尸', date: '2015.9.28', scores: '45665分' }, { name: '新东方厨师', date: '2015.9.28', scores: 42665 },
+    //    { name: '千年老尸', date: '2015.9.28', scores: 40665 }, { name: '苍老师', date: '2015.9.28', scores: 35665 },
+    //    { name: '撸大湿', date: '2015.9.28', scores: 25665 }, { name: '村口王师傅', date: '2015.9.28', scores: 15665 }];
+    if (!data) {
+        storage.setItem('myGameRecords', null);
+        $p.show();
+    } else {
+        data = data.reverse(function (val1, val2) {
+            return val1 - val2;
+        });
+        $p.hide();
+    }
+    $scope.items = data;
 });
+
+function compare(val1, val2) {
+    return val1 - val2;
+}
+
+/*
+*拓展Date方法。得到格式化的日期形式 基本是什么格式都支持
+**date.format('dd.MM.yy'), date.format('yyyy.dd.MM'), date.format('yyyy-MM-dd HH:mm')   等等都可以
+*/
+Date.prototype.format = function (format) {
+    var o = {
+        "M+": this.getMonth() + 1, //month
+        "d+": this.getDate(), //day
+        "h+": this.getHours(), //hour
+        "m+": this.getMinutes(), //minute
+        "s+": this.getSeconds(), //second
+        "q+": Math.floor((this.getMonth() + 3) / 3), //quarter
+        "S": this.getMilliseconds() //millisecond
+    }
+    if (/(y+)/.test(format)) format = format.replace(RegExp.$1,
+    (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+    for (var k in o) if (new RegExp("(" + k + ")").test(format))
+        format = format.replace(RegExp.$1,
+        RegExp.$1.length == 1 ? o[k] :
+        ("00" + o[k]).substr(("" + o[k]).length));
+    return format;
+}

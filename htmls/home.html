@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <meta name="viewport" content="width=device-width ,initial-scale=0" />
+    <meta name="viewport" content="width=device-width ,initial-scale=1.0,maximum-scale=1.0,user-scalable=0;" />
     <title>轰炸设计师</title>
     <link href="../css/home.css" rel="stylesheet/less" />
     <script src="../js/jquery-1.8.2.min.js"></script>
@@ -15,6 +15,7 @@
 <body>
     <div class="wrapper">
         <div class="contentWrapper wrapperItem">
+             <div class="aboutGameNotice btnsItem"></div>
             <div class="header">
                 <div class="gameTitle"></div>
             </div>
@@ -26,6 +27,7 @@
             </div>
             <div class="footer"></div>
             <div class="gameNotice">
+                <div class="closeGameNotice btnsItem"></div>
                 <p>在30秒之内，</p>
                 <p>答对题目累计积分。</p>
                 <p>连击翻倍，答对加分，答错不扣分</p>
@@ -42,6 +44,7 @@
                             <td>{{item.name}}</td>
                         </tr>
                     </table>
+                    <p>第一次玩吧，一边自个儿玩去！</p>
                 </div>
             </div>
         </div>
@@ -49,9 +52,11 @@
             <div class="gameContentHeader"><div class="questionNum">第&nbsp;<span id="totalDoneQuestionsNum">1</span>&nbsp;题</div></div>
             <div class="gameContentPeople"></div>
             <div class="gameContentTime"><span></span><label class="timeDetailInfo"></label></div>
+            <div class="moreInfoSeeHisihi"><a href="http://hisihi.com" target="_blank"></a></div>
             <div class="gameContentQuestion"><p>在ps中，ctrl+v是复制的快捷键么</p></div>
             <div class="doubleHitInfo"><p>&nbsp;×<span class="doubleHitNums"></span>&nbsp;</p></div>
             <div class="wrongAnsweInfo"></div>
+            <div class="rightAnsweInfo"></div>
             <div class="gameContentBtns">
                     <div class="btnYes btnsItem"></div>
                     <div class="btnNo btnsItem"></div>
@@ -64,8 +69,8 @@
                     <div class="scoresLevel scoreLevelHide"></div>
                     <div class="scroresBg"><p>本局累计积分</p><p><span id="totalScores"">0</span>分</p></div>
                     <div class="scroresDescription">
-                        <p>你已超过<span id="defeatPeopleCounts">12313432</span>名设计师</p>
-                        <p>获得&nbsp;&nbsp;<span id="yourHonor">神级设计师</span>&nbsp;&nbsp;称号！！</p>
+                        <!--<p>你已超过<span id="defeatPeopleCounts">12313432</span>名设计师</p>-->
+                        <p>获得&nbsp;&nbsp;<span id="yourHonor"></span>&nbsp;&nbsp;称号！！</p>
                     </div>
                     <div class="gameResultBtns">
                         <div class="shareToFriends btnsItem"></div>
@@ -73,7 +78,7 @@
                     </div>
                 </div>
             </div>
-            <div class="gameRankingListPanel"></div>
+            <!--<div class="gameRankingListPanel"></div>-->
             <div class="gameOverFooter"><a href="http://hisihi.com" target="_blank"></a></div>
         </div>
 
