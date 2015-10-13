@@ -6,7 +6,7 @@ $(function () {
 
 /*游戏对象*/
 var game = {
-    maxTimeStr: '00:15:00',
+    maxTimeStr: '00:01:00',
     $cWrapper: null,
     $gWrapper: null,
     $gOverWrapper: null,
@@ -83,6 +83,9 @@ var game = {
                 that.restarGame();
             }
         });
+
+        $('.btnsItem').on('touchstart', function (){});
+        //document.body.addEventListener('touchstart', function () { //...空函数即可}); 
     },
 
     /*
@@ -217,6 +220,9 @@ var game = {
             numS = '0' + numS;
         }
         numMs -= 1;
+        if (numMs < 10) {
+            numMs = '0' + numMs;
+        }
         $label.text('00:' + numS + ':' + numMs);
 
     },
@@ -267,6 +273,7 @@ var game = {
         $('#totalScores').text(this.calculateScroes());
         this.swapClass(this.$gWrapper, 'gameContentWrapperShow', 'gameContentWrapperHide');
         this.swapClass(this.$gOverWrapper.find('.gameResultPanel'), 'gameResultPanelHide', 'gameResultPanelShow');
+        this.swapClass(this.$gOverWrapper.find('.scoresLevel'), 'scoreLevelHide', 'scoreLevelShow');
         this.swapClass(this.$gOverWrapper.find('.gameRankingListPanel'), 'gameRankingListPanelHide', 'gameRankingListPanelShow');
     },
 
@@ -285,6 +292,7 @@ var game = {
 
         this.swapClass(this.$gWrapper, 'gameContentWrapperShow', 'gameContentWrapperHide');
         this.swapClass(this.$gOverWrapper.find('.gameResultPanel'), 'gameResultPanelShow', 'gameResultPanelHide');
+        this.swapClass(this.$gOverWrapper.find('.scoresLevel'), 'scoreLevelShow', 'scoreLevelHide');
         this.swapClass(this.$gOverWrapper.find('.gameRankingListPanel'), 'gameRankingListPanelShow', 'gameRankingListPanelHide');
     },
 
